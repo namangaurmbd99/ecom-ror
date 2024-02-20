@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   #add validates for user
-  validates :name, presence: true
-  validates :phone_number, presence: true
-  validates :role, presence: true, inclusion: { in: %w(admin customer) }
+  # validates :name, presence: true
+  # validates :phone_number, presence: true
+  # validates :role, presence: true, inclusion: { in: %w(admin customer) }
 end
