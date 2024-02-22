@@ -1,46 +1,59 @@
 class AddressesController < ApplicationController
+    before_action :set_address, only: [:show, :edit, :update, :destroy]
+  
+    # GET /addresses
     def index
-      @addresses = Address.all
+      @addresses = current_user.addresses
     end
   
+    # GET /addresses/1
+    def show
+    end
+  
+    # GET /addresses/new
     def new
       @address = Address.new
     end
   
+    # GET /addresses/1/edit
+    def edit
+    end
+  
+    # POST /addresses
     def create
-      @address = Address.new(address_params)
+      @address = current_user.addresses.build(address_params)
+  
       if @address.save
         redirect_to @address, notice: 'Address was successfully created.'
       else
         render :new
       end
     end
-    
-    def show
-      @address = Address.find(params[:id])
-    end
-
-    def edit
-        @address = Address.find(params[:id])
-    end
-
+  
+    # PATCH/PUT /addresses/1
     def update
-        @address = Address.find(params[:id])
-        if @address.update(address_params)
-            redirect_to @address, notice: 'Address was successfully updated.'
-        else
-            render :edit
-        end
+      if @address.update(address_params)
+        redirect_to @address, notice: 'Address was successfully updated.'
+      else
+        render :edit
+      end
     end
-
+  
+    # DELETE /addresses/1
     def destroy
-        @address = Address.find(params[:id])
-        @address.destroy
-        redirect_to addresses_url, notice: 'Address was successfully destroyed.'
+      @address.destroy
+      redirect_to addresses_url, notice: 'Address was successfully destroyed.'
     end
-
+  
     private
-    def address_params
-        params.require(:address).permit(:street, :city, :state, :zip)
-    end
+      # Use callbacks to share common setup or constraints between actions.
+      def set_address
+        @address = Address.find(params[:id])
+      end
+  
+      # Only allow a list of trusted parameters through.
+      def address_params
+        params.require(:address).permit(:address, :city, :state, :country)
+      end
   end
+  
