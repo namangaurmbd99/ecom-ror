@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Cart:</strong>
+  <%= @cart_product.cart_id %>
+</p>
+
+<p>
+  <strong>Product:</strong>
+  <%= @cart_product.product_id %>
+</p>
+
+<p>
+  <strong>Quantity:</strong>
+  <%= @cart_product.quantity %>
+</p>
+
+<p>
+  <strong>Total amount:</strong>
+  <%= @cart_product.total_amount %>
+</p>
+
+<p>
+  <strong>Remove Product:</strong>
+  <%= link_to 'Remove Product', @cart_product, method: :delete, data: { confirm: 'Are you sure?' } %>
+</p>
+
+<%= link_to 'Edit', edit_cart_product_path(@cart_product) %> |
+<%= link_to 'Back', cart_products_path %>

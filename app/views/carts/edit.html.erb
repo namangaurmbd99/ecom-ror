@@ -1,0 +1,15 @@
+<!-- app/views/carts/edit.html.erb -->
+<h1>Edit Cart</h1>
+
+<%= form_for @cart, url: cart_path(@cart), method: :patch do |f| %>
+  <% @cart.cart_products.each do |cart_product| %>
+    <div class="cart-item">
+      <%= cart_product.product.name %>
+      <%= f.fields_for :cart_products, cart_product do |cp| %>
+        <%= cp.number_field :quantity, min: 1, class: 'form-control' %>
+      <% end %>
+    </div>
+  <% end %>
+  
+  <%= f.submit 'Update Cart', class: 'btn btn-primary' %>
+<% end %>

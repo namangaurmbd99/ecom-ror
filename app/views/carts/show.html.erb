@@ -1,0 +1,37 @@
+<div class="container">
+  <h1>Your Cart</h1>
+  <% if @cart_products.any? %>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+          <th>Remove Product</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @cart_products.each do |cart_product| %>
+          <tr>
+            <td><%= cart_product.product.name %></td>
+            <td><%= cart_product.product.description %></td>
+            <td><%= number_to_currency(cart_product.product.price) %></td>
+            <td><%= cart_product.quantity %></td>
+            <td><%= number_to_currency(cart_product.total_amount) %></td>
+            <td><%= link_to 'Remove Product', cart_product, method: :delete, data: { confirm: 'Are you sure you want to remove this product from your cart?' }, class: 'btn btn-danger' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div>
+      Total: <%= number_to_currency(@total_amount) %>
+    </div>
+    <%# <%= link_to 'Checkout', new_order_path, class: 'btn btn-primary' %>
+    <%= link_to 'Empty Cart', empty_cart_path, method: :delete, data: { confirm: 'Are you sure you want to empty your cart?' }, class: 'btn btn-danger' %>
+
+  <% else %>
+    <p>Your cart is empty.</p>
+  <% end %>
+</div>

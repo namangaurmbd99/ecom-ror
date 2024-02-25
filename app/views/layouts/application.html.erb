@@ -7,12 +7,12 @@
 
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%# <%= javascript_include_tag 'rails-ujs' %>
 </head>
 <body>
 
 <%# add bootstrap %>
 <%= stylesheet_link_tag 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css' %>
-
 
 <%= render partial: "shared/topbar" %>
 <%= yield %>

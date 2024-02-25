@@ -1,0 +1,38 @@
+<!-- app/views/carts/index.html.erb -->
+<div class="container">
+  <h1>Your Cart</h1>
+  <% if @cart_items.any? %>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+          <th>Remove Product</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @cart_items.each do |item| %>
+          <tr>
+            <td><%= item.product.name %></td>
+            <td><%= item.product.description %></td>
+            <td><%= number_to_currency(item.product.price) %></td>
+            <td><%= item.quantity %></td>
+            <td><%= number_to_currency(item.total_amount) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div>
+      Total: <%= number_to_currency(@total_amount) %>
+    </div>
+    <%= link_to 'Checkout', new_order_path, class: 'btn btn-primary' %>
+    <%= link_to 'Empty Cart', empty_path, method: :delete, data: { confirm: 'Are you sure you want to empty your cart?' }, class: 'btn btn-danger' %>
+    <%= link_to 'Edit Cart', edit_cart_path, class: 'btn btn-secondary' %>
+    <%= link_to 'Show Cart', cart_path, class: 'btn btn-info' %>
+  <% else %>
+    <p>Your cart is empty.</p>
+  <% end %>
+</div>

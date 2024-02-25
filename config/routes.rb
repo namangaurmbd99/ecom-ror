@@ -1,11 +1,25 @@
 Rails.application.routes.draw do
   get 'home/index'
-  root to: 'home#index'
+  #root to product index
+  root to: 'products#index'
 
   devise_for :users
 
   resources :addresses
   resources :products
+  resource :cart, only: [:show] do
+    post 'add_product', on: :member
+    delete 'remove_product', on: :member
+    post 'checkout', on: :member
+    delete 'empty', on: :member
+  end
+  resources :products do
+    post 'add_to_cart', on: :member
+  end
+  resources :cart_products, only: [:show, :create, :edit, :update, :destroy] do
+    delete 'remove_product', on: :member
+  end
+
 
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
