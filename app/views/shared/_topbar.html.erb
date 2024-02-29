@@ -12,18 +12,32 @@
           <li class="nav-item">
             <%= link_to 'Edit profile', edit_user_registration_path, class: "nav-link" %>
           </li>
-          <li class="nav-item">
-            <%= link_to 'Add Product', new_product_path, class: "nav-link" %>
-          </li>
+          <% if current_user && current_user.admin? %>
+            <li class="nav-item">
+              <%= link_to 'Add Product', new_product_path, class: "nav-link" %>
+            </li>
+          <% end %>
           <li class="nav-item">
             <%= link_to 'Products', products_path, class: "nav-link" %>
           </li>
           <li class="nav-item">
             <%= link_to 'Addresses', addresses_path, class: "nav-link" %>
           </li>
-          <li class="nav-item">
-            <%= link_to 'My Cart', cart_path(current_user.cart), class: "nav-link" %>
-          </li>
+          <% unless current_user && current_user.admin? %>
+            <li class="nav-item">
+              <%= link_to 'My Cart', cart_path(current_user.cart), class: "nav-link" %>
+            </li>
+          <% end %>
+          <% unless current_user && current_user.admin? %>
+            <li class="nav-item">
+              <%= link_to 'My Orders', orders_path, class: "nav-link" %>
+            </li>
+          <% end %>
+          <% unless current_user && current_user.admin? %>
+            <li class = "nav-item">
+              <%= link_to 'My payments', payments_path, class: "nav-link" %>
+            </li>
+          <% end %>
           <li class="nav-item">
             <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "nav-link" %>
           </li>

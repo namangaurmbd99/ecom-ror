@@ -80,8 +80,6 @@ class ProductsController < ApplicationController
       redirect_to @product, alert: 'Failed to add product to cart.'
     end
   end
-  
-
 
   private
   
@@ -95,6 +93,6 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:name, :description, :price, :image)
+    params.require(:product).permit(:name, :description, :price, :image[])
   end
 end

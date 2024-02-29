@@ -1,0 +1,23 @@
+<h1>Payment Details</h1>
+
+<table>
+  <tbody>
+    <tr>
+      <td><strong>ID:</strong></td>
+      <td><%= @payment.id %></td>
+    </tr>
+    <tr>
+      <td><strong>Order ID:</strong></td>
+      <td><%= @payment.order_id %></td>
+    </tr>
+    <tr>
+      <td><strong>Amount:</strong></td>
+      <td><%= number_to_currency(@payment.amount) %></td>
+    </tr>
+    <tr>
+      <td><strong>Payment Date:</strong></td>
+      <td><%= @payment.payment_date.strftime('%B %d, %Y') %></td>
+    </tr>
+  </tbody>
+</table>
+

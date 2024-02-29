@@ -1,0 +1,41 @@
+<div class="container">
+  <h1>Confirm Your Order</h1>
+  
+  <h2>Order Summary</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @cart_products.each do |cart_product| %>
+        <tr>
+          <td><%= cart_product.product.name %></td>
+          <td><%= cart_product.quantity %></td>
+          <td><%= number_to_currency(cart_product.product.price) %></td>
+          <td><%= number_to_currency(cart_product.total_amount) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  
+  <%= form_with(model: @order, url: place_order_checkout_index_path, method: :post) do |form| %>
+    <h2>Shipping Address</h2>
+    <div class="form-group">
+      <%= form.label :address_id %>
+      <%= form.select :address_id, options_for_select(current_user.addresses.map { |address| [address.full_address, address.id] }), {}, class: 'form-control' %>
+    </div>
+          
+    <h2>Payment Method</h2>
+    <div class="form-group">
+      <%= form.label :payment_method %>
+      <%= form.select :payment_method, ['Credit Card', 'Debit Card', 'Net Banking', 'UPI','Cash on Delivery'], class: 'form-control' %>
+    </div>
+
+    <%= form.submit 'Place Order', class: 'btn btn-success' %>
+  <% end %>
+</div>

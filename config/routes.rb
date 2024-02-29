@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'checkout/confirm_order'
   get 'home/index'
   #root to product index
   root to: 'products#index'
@@ -19,8 +20,21 @@ Rails.application.routes.draw do
   resources :cart_products, only: [:show, :create, :edit, :update, :destroy] do
     delete 'remove_product', on: :member
   end
+  resources :checkout, only: [] do
+    collection do
+      get 'confirm_order', to: 'checkout#confirm_order'
+      post 'place_order', to: 'checkout#place_order'
+    end
+  end
 
-
+  get 'order_confirmation', to: 'checkout#order_confirmation', as: 'order_confirmation'
+  get 'checkout/index', to: 'checkout#index', as: 'checkout_index'
+  resources :orders
+  resources :order_products
+  resources :payments
+  resources :orders do
+    resources :payments
+  end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

@@ -6,10 +6,20 @@
         <th>Name</th>
         <th>Description</th>
         <th>Price</th>
-        <th colspan="3"></th>
+        <% if current_user && current_user.admin? %>
+          <th colspan="3"></th>
+        <% else %>
+          <th></th>
+          <th></th>
+          <th></th>
+        <% end %>
         <th>Image</th>
-        <th>Quantity</th>
-        <th>Add to Cart</th>
+        <% unless current_user && current_user.admin? %>
+          <th>Quantity</th>
+        <% end %>
+        <% unless current_user && current_user.admin? %>
+          <th>Add to Cart</th>  
+        <% end %>        
       </tr>
     </thead>
     <tbody>
@@ -19,21 +29,37 @@
           <td><%= product.description %></td>
           <td><%= number_to_currency(product.price) %></td>
           <td><%= link_to 'Show', product, class: 'btn btn-primary btn-sm' %></td>
-          <td><%= link_to 'Edit', edit_product_path(product), class: 'btn btn-secondary btn-sm' %></td>
-          <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %></td>
-          <td><%= image_tag product.image, class: "img-thumbnail", style: "max-width: 100px; max-height: 100px;" if product.image.attached? %></td>
+          <% if current_user && current_user.admin? %> 
+            <td><%= link_to 'Edit', edit_product_path(product), class: 'btn btn-warning btn-sm' %></td>
+            <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %></td>
+          <% else %>
+            <td colspan="2"></td>
+          <% end %>
+          <%# <td><%= image_tag product.image, class: "img-thumbnail", style: "max-width: 100px; max-height: 100px;" if product.image.attached? %></td>
           <td>
-            <%= form_tag add_to_cart_product_path(product), method: :post do %>
-              <%= number_field_tag "quantity", 1, min: 1, class: 'form-control form-control-sm', style: 'width: 60px;' %>
-          </td>
-          <td>
-            <%= submit_tag 'Add to Cart', class: 'btn btn-success btn-sm' %>
-          </td>
+          <% if product.images.attached? %>
+            <% product.images.each do |image| %>
+              <%= image_tag image, class: "img-thumbnail", style: "max-width: 100px; max-height: 100px;" %>
             <% end %>
-        </tr>
+          <% end %>
+        </td>
+
+          <% unless current_user && current_user.admin? %>
+            <td>
+              <%= form_tag add_to_cart_product_path(product), method: :post do %>
+                <%= number_field_tag "quantity", 1, min: 1, class: 'form-control form-control-sm', style: 'width: 60px;' %>
+            </td>
+            <% unless current_user && current_user.admin? %>
+              <td><%= submit_tag "Add to Cart", class: 'btn btn-success btn-sm' %></td>
+            <% end %>
+          <% end %>
+          </tr>
+        <% end %>
       <% end %>
     </tbody>
   </table>
 
-  <%= link_to 'New Product', new_product_path, class: 'btn btn-success' %>
+  <% if current_user && current_user.admin? %>
+    <%= link_to 'New Product', new_product_path, class: 'btn btn-success' %>
+  <% end %>
 </div>

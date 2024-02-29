@@ -1,0 +1,26 @@
+<!-- app/views/checkout/order_confirmation.html.erb -->
+<h1>Order Confirmation</h1>
+<!-- Add your order confirmation content here -->
+<h2>Order Summary</h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @order_products.each do |order_product| %>
+      <tr>
+        <td><%= order_product.product.name %></td>
+        <td><%= order_product.quantity %></td>
+        <td><%= number_to_currency(order_product.product.price) %></td> 
+        <td><%= number_to_currency(order_product.amount) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to 'Back', products_path, class: 'btn btn-primary' %>
+

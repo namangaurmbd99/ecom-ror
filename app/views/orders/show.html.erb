@@ -1,0 +1,40 @@
+<p>
+  <strong>User:</strong>
+  <%= @order.user.name %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @order.address.address %>, <%= @order.address.city %>, <%= @order.address.state %>, <%= @order.address.country %>
+</p>
+
+<p>
+  <strong>Total Amount:</strong>
+  <%= number_to_currency(@order.total_amount) %>
+</p>
+
+
+<h2>Order Products</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @order.order_products.each do |order_product| %>
+      <tr>
+        <td><%= order_product.product.name %></td>
+        <td><%= order_product.quantity %></td>
+        <td><%= number_to_currency(order_product.price) %></td>
+        <td><%= number_to_currency(order_product.amount) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Edit', edit_order_path(@order) %> |
+<%= link_to 'Back', orders_path %>

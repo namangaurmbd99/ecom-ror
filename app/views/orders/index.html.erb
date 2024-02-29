@@ -1,0 +1,42 @@
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <%# <th>ID</th> %>
+      <th>User</th>
+      <th>Address</th>
+      <th>Products</th>
+      <th>Quantity</th>
+      <th>Product Price</th>
+      <th>Total Amount</th>
+      <th>Payment Method</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @orders.each do |order| %>
+      <tr>
+        <%# <td><%= order.id %></td> 
+        <td><%= order.user.name %></td>
+        <td><%= "#{order.address.address}, #{order.address.city}, #{order.address.state}, #{order.address.country}" %></td>
+        <td>
+          <% order.order_products.each do |order_product| %>
+            <%= order_product.product.name %><br>
+          <% end %>
+        </td>
+        <td>
+          <% order.order_products.each do |order_product| %>
+            <%= order_product.quantity %><br>
+          <% end %>
+        </td>
+        <td>
+          <% order.order_products.each do |order_product| %>
+            <%= number_to_currency(order_product.product.price) %><br>
+          <% end %>
+        </td>
+        <td><%= number_to_currency(order.order_products.sum(&:amount)) %></td>
+        <td><%= order.payment_method %></td>
+        <%# print the payment method in server console %>
+        <% Rails.logger.info "Payment Method111: #{order.payment_method}" %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

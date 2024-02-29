@@ -1,0 +1,33 @@
+<h1>Order Products</h1>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Order</th>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Amount</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @order_products.each do |order_product| %>
+      <tr>
+        <td><%= order_product.id %></td>
+        <td><%= order_product.order.id %></td>
+        <td><%= order_product.product.name %></td>
+        <td><%= order_product.quantity %></td>
+        <td><%= number_to_currency(order_product.price) %></td>
+        <td><%= number_to_currency(order_product.amount) %></td>
+        <td>
+          <%= link_to 'Show', order_product %>
+          <%= link_to 'Edit', edit_order_product_path(order_product) %>
+          <%= link_to 'Destroy', order_product, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New Order Product', new_order_product_path %>

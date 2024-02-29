@@ -13,10 +13,13 @@
   <%= @product.price %>
 </p>
 
-<% if @product.image.attached? %>
-  <%= image_tag @product.image, class: "img-thumbnail" %>
+<% if @product.images.attached? %>
+  <div class="product-images">
+    <% @product.images.each do |image| %>
+      <%= image_tag image, class: "img-thumbnail" %>
+    <% end %>
+  </div>
 <% end %>
-
 
 <%= link_to 'Edit', edit_product_path(@product) %> |
 <%= link_to 'Back', products_path %>
