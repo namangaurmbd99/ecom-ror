@@ -5,19 +5,21 @@ class User < ApplicationRecord
   devise :omniauthable, omniauth_providers: [:google_oauth2, :facebook]
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  # Associations
   has_many :addresses, dependent: :destroy
   has_one :cart, dependent: :destroy
   has_many :orders, dependent: :destroy
   has_many :payments, through: :orders, dependent: :destroy
 
-  validates :name, presence: true
-  validates :phone_number, presence: true
+  # Validations
+  validates :name, :phone_number, presence: true
   validates :role, presence: true, inclusion: { in: %w(admin customer) }
 
-  # Define role enums
+  # Enums
   enum role: { admin: 'admin', customer: 'customer' }
 
-  # Define role check methods
+  # Methods
   def admin?
     role == 'admin'
   end

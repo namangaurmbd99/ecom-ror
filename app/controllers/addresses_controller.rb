@@ -1,6 +1,7 @@
 class AddressesController < ApplicationController
   include Pundit
   before_action :set_address, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_address, except: [:index, :new, :create]
 
   # GET /addresses
   def index
@@ -9,24 +10,22 @@ class AddressesController < ApplicationController
 
   # GET /addresses/1
   def show
-    authorize @address # Check authorization before showing the address
   end
 
   # GET /addresses/new
   def new
     @address = Address.new
-    authorize @address # Check authorization before rendering the new address form
+    authorize @address
   end
 
   # GET /addresses/1/edit
   def edit
-    authorize @address # Check authorization before rendering the edit address form
   end
 
   # POST /addresses
   def create
     @address = current_user.addresses.build(address_params)
-    authorize @address # Check authorization before creating the address
+    authorize @address
 
     if @address.save
       redirect_to @address, notice: 'Address was successfully created.'
@@ -37,8 +36,6 @@ class AddressesController < ApplicationController
 
   # PATCH/PUT /addresses/1
   def update
-    authorize @address # Check authorization before updating the address
-
     if @address.update(address_params)
       redirect_to @address, notice: 'Address was successfully updated.'
     else
@@ -48,8 +45,6 @@ class AddressesController < ApplicationController
 
   # DELETE /addresses/1
   def destroy
-    authorize @address # Check authorization before destroying the address
-
     @address.destroy
     redirect_to addresses_url, notice: 'Address was successfully destroyed.'
   end
@@ -58,6 +53,11 @@ class AddressesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_address
       @address = Address.find(params[:id])
+    end
+
+    # Authorize address actions
+    def authorize_address
+      authorize @address
     end
 
     # Only allow a list of trusted parameters through.

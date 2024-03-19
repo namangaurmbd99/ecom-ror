@@ -17,9 +17,15 @@
           <td><%= address.city %></td>
           <td><%= address.state %></td>
           <td><%= address.country %></td>
-          <td><%= link_to 'Show', address, class: 'btn btn-primary btn-sm' %></td>
-          <td><%= link_to 'Edit', edit_address_path(address), class: 'btn btn-secondary btn-sm' %></td>
-          <td><%= link_to 'Destroy', address, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %></td>
+          <td>
+            <%= link_to 'Show', address, class: 'btn btn-primary btn-sm' %>
+          </td>
+          <td>
+            <%= link_to 'Edit', edit_address_path(address), class: 'btn btn-secondary btn-sm' %>
+          </td>
+          <td>
+            <%= link_to 'Destroy', address, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
+          </td>
         </tr>
       <% end %>
     </tbody>
